@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<project name="MessingWithSlick" basedir="." default="build">
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="bin"/>
+
+    <path id="master-classpath">
+        <fileset dir="${basedir}/lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="build" description="Compiling the Project ${name}">
+        <mkdir dir ="${build.dir}"/>
+        <javac srcdir="${src.dir}"
+               classpath="${basedir}/lib/*.jar" 
+               includeantruntime="false" 
+               destdir="${build.dir}" 
+               source="1.7" 
+               target="1.7">
+               <classpath refid="master-classpath"/>
+        </javac>
+        <jar destfile="${basedir}/MessingWithSlick.jar"
+             basedir="${build.dir}">
+             <manifest>
+                <attribute name="Main-Class" value="de.saremox.messingwithslick.GameStart"/>
+                <attribute name="Class-Path" value="lib" />
+             </manifest>
+             <zipgroupfileset dir="lib/."/>
+             <fileset dir="${basedir}" includes="res/**" />
+             <fileset dir="${basedir}/bin"/>
+        </jar>
+    </target>
+    
+    <target name="clean">
+        <delete>
+            <fileset dir="${build.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </delete>
+    </target>
+</project>
